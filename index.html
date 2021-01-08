@@ -8,25 +8,97 @@
   }
   </style>
   <link rel="stylesheet" href="https://unpkg.com/xterm@3.6.0/dist/xterm.css" />
+  <link rel="stylesheet" href="style2.css"/>
 
-  <link rel="stylesheet" href="style.css" />
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+<script src="assets/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+
+<link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
+
+<script>
+        $(document).ready(function () {
+        $("#header").load("header.html");
+        var curq;
+                $(".que").click(function () {
+                         $(".que").each(function (index) {
+                                if($(this).css("background-color") != "rgb(92, 184, 92)") {
+                                        $(this).css({"background-color": "#f7f7f7 ", "color": "black"});
+                                }
+                         });
+                        if($(this).css("background-color") != "rgb(92, 184, 92)") {
+                                $(this).css({"background-color": "#0275d8", "color": "white"});
+                        }
+                         curq = this;
+                });
+
+                $("#done").click(function () {
+                        $(curq).css({"background-color": "#5cb85c", "color": "white"});
+                });
+                $("#unmark").click(function () {
+                        $(curq).css({"background-color": "#f7f7f7", "color": "black"});
+                });
+        });
+</script>
+
 </head>
 <body>
+<div id="header"></div>
 
-<span style="font-size: 1.4em;">pyxterm.js</span>&nbsp;&nbsp;&nbsp;
-<span style="font-size: small;">status: <span style="font-size: small;" id="status">connecting...</span></span>
+<div class="container-fluid" style="margin-top: 20px;">
 
-<div id="test">
-  <div id="left"></div>
-  <div id="center"></div>
-  <div id="right">
-	<div id="terminal"></div>
-  </div>
+	<div class="row">
+		
+<div class="col-sm-1">
+      <div class="col-sm-10">
+        <div class="container pt-2 pb-2 bg-dark text-center shadow-lg">
+          <div class="container p-1">
+            <button type="button" class="btn btn-light que" id="1">1</button>
+          </div>
+          <div class="container p-1">
+            <button type="button" class="btn btn-light que" id="2">2</button>
+          </div>
+          <div class="container p-1">
+            <button type="button" class="btn btn-light que" id="3">3</button>
+          </div>
+          <div class="container p-1">
+            <button type="button" class="btn btn-light que" id="4">4</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-5">
+        <div>
+          <div class="col-sm-12 bg-dark text-light">
+                <div class="container p-3">
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                </div>
+          </div>
+        </div>
+        <div>
+                <div style="margin-top: 2rem !important;" class="text-center">
+              <button type="button" class="btn btn-primary" id="unmark">Unmark</button>
+              <button type="button" class="btn btn-primary" id="done">Done</button>
+              <button type="button" class="btn btn-primary">Previous</button>
+              <button type="button" class="btn btn-primary">Next</button>
+                </div>
+        </div>
+    </div>
+
+		<div class="col-sm-6">
+			<span style="font-size: small;">status: <span style="font-size: small;" id="status">connecting...</span></span>
+			
+			<div class="h4"><div style="width:auto;" id="terminal"></div></div>
+                </div>		
+	</div>
+
 </div>
 
-<p style="text-align: right; font-size: small;">
-  built by <a href="https://grassfedcode.com">Chad Smith</a> <a href="https://github.com/cs01">GitHub</a>
-</p>
 <!-- xterm -->
 <script src="https://unpkg.com/xterm@3.6.0/dist/xterm.js"></script>
 <script src="https://unpkg.com/xterm@3.6.0/dist/addons/fit/fit.js"></script>
@@ -36,18 +108,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 
 <script>
-  Terminal.applyAddon(fullscreen)
+//  Terminal.applyAddon(fullscreen)
   Terminal.applyAddon(fit)
   Terminal.applyAddon(webLinks)
   Terminal.applyAddon(search)
   const term = new Terminal({
         cursorBlink: true,
         macOptionIsMeta: true,
-        scrollback: true,
+        scrollback: 1000,
+	fontSize: 21,
     });
   term.open(document.getElementById('terminal'));
   term.fit()
-  term.resize(15, 50)
+  term.resize(15, 32)
   console.log(`size: ${term.cols} columns, ${term.rows} rows`)
   // term.toggleFullScreen(true)
   term.fit()
